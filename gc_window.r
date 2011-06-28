@@ -1,3 +1,7 @@
+library(MASS)
+library(seqinr)
+
+
 slidingwindowplot <- function(windowsize, inputseq)
 {
    print(inputseq)
@@ -14,7 +18,7 @@ slidingwindowplot <- function(windowsize, inputseq)
 }
 
 
-slidingwindowfreq <- function(windowsize, inputdir)
+slidingwindowfreq <- function(windowsize, inputdir, binsize)
 {
    GCs <- numeric()
    v <- 0 
@@ -39,8 +43,10 @@ slidingwindowfreq <- function(windowsize, inputdir)
        }
    } 
 
-   bins <- seq(0,1,by=0.1)
-   hist(GCs,breaks=bins)
+   bins <- seq(0,1,by=binsize)
+   hist1<-hist(GCs,breaks=bins,plot=FALSE, xlab='GC content %', ylab='% of 1kb bins with this GC content' )
+   hist1$counts <- hist1$counts*100/sum(hist1$counts)
+   plot(hist1)
 }
 
 
